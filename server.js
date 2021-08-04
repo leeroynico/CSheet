@@ -1,8 +1,12 @@
 require('dotenv').config()
+const PORT = process.env.PORT
+
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const PORT = process.env.PORT
+const mongoDBClient = require('./mongoClient')
+
+app.use(cors())
 
 // Route par défaut, message envoyé pour tester la fonctionnalité
 app.get('/', (req, res) => {
@@ -12,11 +16,6 @@ app.get('/', (req, res) => {
 // Démarrage du server avec message dans la console
 app.listen(PORT, () => {
    console.log(`🙏 Connecté au server http://localhost:${PORT}`)
+   mongoDBClient.initialize()
 })
 
-// const db = require('db')
-// db.connect({
-//    host: process.env.DB_HOST,
-//    username: process.env.DB_USER,
-//    password: process.env.DB_PASS
-// })

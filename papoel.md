@@ -115,6 +115,51 @@ mongodb+srv://teamStudi:csheet@cluster-csheet.aylec.mongodb.net/CSheetDB
 
 ![connect-compass-success](./images/connect-compass-success.jpg)
 
-<br/><hr/><br/><br/>
+<br/><br/><hr/><br/>
 
-# Voila c'est tout t'as plus qu'a t'amuser maintenant !
+### Voila c'est tout t'as plus qu'a t'amuser maintenant !
+
+<br/><hr/>
+
+# Comment récupérer son URI et l'utiliser
+
+Un petit add-on, tu auras besoin d'un URI voici comment le trouver et t'en servir :
+
+Connectes toi à ton compte mongoDB Atlas puis sur ton dashboard cliques sur `Connect`
+
+![connect-server-getUri.jpg](./images/connect-server-getUri.jpg)
+
+copie le code présent en cliquant sur le boutton de copie
+
+![connect-server-getUri.jpg](./images/connect-getUri.jpg)
+
+```javascript
+mongodb+srv://<username>:<password>@cluster-csheet.aylec.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+```
+
+dans ton fichier MongoClient qui servira a connecter ta base de donnée 
+
+```javascript
+const mongoose= require('mongoose')
+const DB = "CSheetDB"
+const URI = `mongodb+srv://teamStudi:csheet@cluster-csheet.aylec.mongodb.net/${DB}?retryWrites=true&w=majority`
+
+const MongoDb = {
+   initialize: () => {
+      try {
+        const client = mongoose.connect(URI, 
+            { 
+              useNewUrlParser: true, 
+              useUnifiedYopolgy: true
+            })
+        .client.then(( => console.log(`Connecté à la base de donnée ${DB} avec succès ✔️`)))
+      } catch(e) {
+          throw Error(e)  
+      }
+   }
+}
+
+module.exports = MongoClient
+```
+
+Voila maintenat on aura plus qu'a importer le module quand on voudra se connecter à notre base de donnée.
